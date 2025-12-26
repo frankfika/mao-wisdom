@@ -1,14 +1,9 @@
-export interface CardWisdom {
-  title: string;          // e.g., "Current Situation", "Strategic View", "Immediate Action"
-  keyword: string;        // 2 characters for visual impact, e.g. "矛盾", "星星", "实事"
-  quote: string;          // The Mao quote
-  source: string;         // Source book/article
-  interpretation: string; // Brief specific advice for this card
-}
-
-export interface SpreadData {
-  cards: CardWisdom[];    // Array of 3 cards
-  overallAdvice: string;  // A final summary synthesis
+export interface WisdomResult {
+  keyword: string;        // 2个字的核心词
+  quote: string;          // 毛选引用
+  source: string;         // 出处
+  advice: string;         // 一句话建议
+  encouragement: string;  // 鼓励的话
 }
 
 export enum AppState {
