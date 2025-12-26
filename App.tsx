@@ -8,10 +8,87 @@ const SUGGESTIONS = [
   "创业方向很迷茫",
 ];
 
-// 毛主席挥手剪影 SVG
-const MaoWavingSilhouette = () => (
-  <svg viewBox="0 0 300 400" className="w-full h-full" fill="currentColor">
-    <path d="M150 20 C120 20 100 40 95 70 C90 100 95 120 100 140 L95 145 C85 150 80 160 85 175 L75 180 C65 175 55 180 50 195 C45 210 50 225 60 235 L55 250 C50 260 55 275 70 285 L65 320 C60 350 70 380 90 395 L210 395 C230 380 240 350 235 320 L230 285 C245 275 250 260 245 250 L240 235 C250 225 255 210 250 195 C245 180 235 175 225 180 L215 175 C220 160 215 150 205 145 L200 140 C205 120 210 100 205 70 C200 40 180 20 150 20 Z M130 60 C140 55 160 55 170 60 C180 65 185 80 180 95 L175 110 C165 105 155 105 145 105 C135 105 125 105 120 110 L115 95 C110 80 120 65 130 60 Z M110 200 L100 180 C95 170 100 160 110 155 L120 150 L130 170 L110 200 Z M190 200 L170 170 L180 150 L190 155 C200 160 205 170 200 180 L190 200 Z"/>
+// 毛主席挥手经典剪影 - 天安门城楼造型
+const MaoWaving = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 200 300" className={className} fill="currentColor">
+    {/* 头部 - 标志性发型 */}
+    <ellipse cx="100" cy="45" rx="32" ry="38" />
+    {/* 头发轮廓 - 向后梳的发型 */}
+    <path d="M68 35 Q65 20 80 15 Q100 10 120 15 Q135 20 132 35 Q125 25 100 22 Q75 25 68 35Z"/>
+
+    {/* 右手高举挥手 */}
+    <path d="
+      M145 85
+      Q160 60 170 40
+      Q175 30 180 35
+      Q185 42 178 55
+      Q170 75 158 95
+      Q150 100 145 85
+    "/>
+    {/* 手掌张开 */}
+    <path d="M170 40 Q175 32 178 28 Q180 25 183 28 Q185 33 180 38Z"/>
+    <path d="M175 35 Q182 28 186 26 Q189 25 190 29 Q189 35 182 38Z"/>
+    <path d="M178 38 Q187 33 191 32 Q194 32 194 36 Q192 40 185 42Z"/>
+    <path d="M180 42 Q188 40 192 40 Q195 41 194 45 Q191 48 184 47Z"/>
+
+    {/* 身体 - 中山装 */}
+    <path d="
+      M68 80
+      Q55 90 50 120
+      L45 200
+      L48 280
+      L85 280
+      L88 200
+      Q90 160 92 130
+      L100 95
+      L108 130
+      Q110 160 112 200
+      L115 280
+      L152 280
+      L155 200
+      L150 120
+      Q145 90 132 80
+      Q115 75 100 78
+      Q85 75 68 80
+    "/>
+
+    {/* 左手自然下垂 */}
+    <path d="
+      M55 120
+      Q45 130 40 160
+      Q38 180 42 200
+      L50 200
+      Q52 180 50 160
+      Q52 140 58 125
+    "/>
+
+    {/* 中山装领子 */}
+    <path d="M85 82 L100 95 L115 82 L108 78 L100 88 L92 78 Z" fill="currentColor"/>
+
+    {/* 中山装口袋 */}
+    <rect x="70" y="140" width="20" height="3" rx="1"/>
+    <rect x="110" y="140" width="20" height="3" rx="1"/>
+  </svg>
+);
+
+// 五角星装饰
+const Star = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </svg>
+);
+
+// 放射光芒背景
+const Sunburst = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 400 400" className={className}>
+    {[...Array(24)].map((_, i) => (
+      <path
+        key={i}
+        d="M200 200 L200 0 L215 0 Z"
+        fill="currentColor"
+        transform={`rotate(${i * 15} 200 200)`}
+      />
+    ))}
   </svg>
 );
 
@@ -55,49 +132,61 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex flex-col">
+    <div className="h-[100dvh] bg-gradient-to-b from-[#faf8f5] to-[#f5f0eb] flex flex-col overflow-hidden">
 
       {/* ===== 首页 ===== */}
       {appState === AppState.IDLE && (
-        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-          {/* 顶部装饰 */}
-          <div className="mb-10 text-center">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <span className="text-red-500 text-2xl">★</span>
-              <h1 className="font-calligraphy text-5xl sm:text-6xl text-[#f5e6d3]">
-                毛选答案
-              </h1>
-              <span className="text-red-500 text-2xl">★</span>
-            </div>
-            <p className="text-[#a89584] text-sm tracking-widest">遇事不决 · 问问毛选</p>
+        <div className="flex-1 flex flex-col items-center justify-center px-5 py-6 overflow-hidden relative">
+          {/* 放射光芒背景 */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <Sunburst className="w-[150%] h-[150%] text-red-500/[0.04]" />
           </div>
 
-          <div className="w-full max-w-md">
-            <textarea
-              className="w-full bg-[#2a2a2a] text-[#f5e6d3] rounded-lg p-5 text-base resize-none focus:outline-none focus:ring-1 focus:ring-red-600/50 placeholder-[#666] min-h-[120px] border border-[#333]"
-              placeholder="说说你的困惑..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
+          {/* 背景毛主席挥手像 */}
+          <div className="absolute bottom-0 right-0 pointer-events-none overflow-hidden opacity-[0.15]">
+            <MaoWaving className="w-56 h-72 text-red-600 translate-x-6 translate-y-8" />
+          </div>
 
-            <div className="flex flex-wrap gap-2 mt-4 justify-center">
-              {SUGGESTIONS.map((s, i) => (
-                <button
-                  key={i}
-                  onClick={() => setInput(s)}
-                  className="text-xs text-[#888] hover:text-red-400 bg-[#2a2a2a] hover:bg-[#333] px-3 py-1.5 rounded transition-colors border border-[#333]"
-                >
-                  {s}
-                </button>
-              ))}
+          {/* Logo区 */}
+          <div className="relative mb-8 text-center">
+            <div className="inline-flex items-center gap-1 mb-4">
+              <Star className="w-5 h-5 text-red-500" />
+              <Star className="w-4 h-4 text-amber-500" />
+            </div>
+            <h1 className="font-calligraphy text-4xl sm:text-5xl text-red-700 mb-2">
+              毛选答案
+            </h1>
+            <p className="text-gray-500 text-xs tracking-widest">遇事不决 · 问问毛选</p>
+          </div>
+
+          <div className="relative w-full max-w-sm">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-5 shadow-xl shadow-red-100/50 border border-red-100/50">
+              <textarea
+                className="w-full bg-transparent text-gray-700 text-base resize-none focus:outline-none placeholder-gray-400 h-[80px] leading-relaxed"
+                placeholder="说说你的困惑..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+
+              <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-red-100/50">
+                {SUGGESTIONS.map((s, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setInput(s)}
+                    className="text-xs text-gray-500 hover:text-red-600 bg-red-50/50 hover:bg-red-100 px-2.5 py-1 rounded-full transition-all"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <button
               onClick={handleSubmit}
               disabled={!input.trim()}
-              className="w-full mt-6 bg-red-700 hover:bg-red-600 disabled:bg-[#333] disabled:text-[#666] text-[#f5e6d3] font-medium py-4 rounded-lg transition-all text-lg"
+              className="w-full mt-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-200 disabled:to-gray-300 text-white disabled:text-gray-400 font-medium py-3.5 rounded-xl transition-all text-base shadow-lg shadow-red-300/50 disabled:shadow-none"
             >
-              求 签
+              求一签
             </button>
           </div>
         </div>
@@ -105,111 +194,109 @@ function App() {
 
       {/* ===== 加载 ===== */}
       {appState === AppState.LOADING && (
-        <div className="flex-1 flex flex-col items-center justify-center bg-[#1a1a1a]">
-          <div className="relative w-20 h-20">
-            <div className="absolute inset-0 border-2 border-[#333] border-t-red-600 rounded-full animate-spin" />
-            <div className="absolute inset-3 border-2 border-[#333] border-b-red-600 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="relative">
+            <div className="w-12 h-12 rounded-full border-2 border-red-100 border-t-red-500 animate-spin" />
           </div>
-          <p className="mt-8 text-[#888] text-sm tracking-widest">翻阅毛选中...</p>
+          <p className="mt-6 text-gray-400 text-sm">正在翻阅毛选...</p>
         </div>
       )}
 
-      {/* ===== 明信片结果 ===== */}
+      {/* ===== 结果卡片 - 战斗时代风格 ===== */}
       {appState === AppState.SUCCESS && result && (
-        <div className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+        <div className="flex-1 flex flex-col items-center justify-center px-5 py-4 overflow-hidden">
 
-          <div className={`w-full max-w-sm transition-all duration-700 ${showCard ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className={`w-full max-w-sm transition-all duration-500 ${showCard ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
 
-            {/* 明信片 - 复古宣传画风格 */}
-            <div className="relative overflow-hidden bg-[#f5e6d3]" style={{ aspectRatio: '3/4' }}>
+            {/* 卡片 - 红色边框 + 米色内页 */}
+            <div className="relative bg-gradient-to-br from-red-600 to-red-700 p-1 rounded-xl shadow-xl shadow-red-300/40">
+              <div className="relative bg-[#fdf8f3] rounded-lg overflow-hidden">
 
-              {/* 顶部红色条幅 */}
-              <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-red-700 to-red-800 flex items-center justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-300 text-sm">★</span>
-                  <span className="text-amber-100 text-xs tracking-[0.3em] font-medium">毛选答案</span>
-                  <span className="text-amber-300 text-sm">★</span>
+                {/* 放射光芒背景 */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
+                  <Sunburst className="w-[200%] h-[200%] text-red-600" />
+                </div>
+
+                {/* 毛主席挥手像 - 右下角 */}
+                <div className="absolute -bottom-6 -right-2 pointer-events-none opacity-[0.12]">
+                  <MaoWaving className="w-32 h-44 text-red-700" />
+                </div>
+
+                {/* 顶部装饰条 */}
+                <div className="bg-gradient-to-r from-red-600 via-red-500 to-red-600 py-2 px-4 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 text-amber-300" />
+                    <span className="text-amber-100 text-xs font-medium tracking-wider">毛选答案</span>
+                  </div>
+                  <div className="flex gap-0.5">
+                    <Star className="w-3 h-3 text-amber-300" />
+                    <Star className="w-2.5 h-2.5 text-amber-200" />
+                    <Star className="w-2 h-2 text-amber-100" />
+                  </div>
+                </div>
+
+                {/* 内容区 */}
+                <div className="relative p-5">
+
+                  {/* 语录 - 核心 */}
+                  <div className="mb-5">
+                    <p className="text-red-900 text-lg leading-relaxed font-medium">
+                      「{result.quote}」
+                    </p>
+                    <p className="text-red-600 text-xs mt-3 font-medium">
+                      —— {result.source}
+                    </p>
+                  </div>
+
+                  {/* 分割线 - 五角星 */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex-1 h-px bg-red-200" />
+                    <Star className="w-3 h-3 text-red-400" />
+                    <div className="flex-1 h-px bg-red-200" />
+                  </div>
+
+                  {/* 解读 */}
+                  <div className="bg-white/60 rounded-lg p-4 border border-red-200/50">
+                    <p className="text-red-800/80 text-sm leading-relaxed">
+                      {result.interpretation}
+                    </p>
+                  </div>
+
+                  {/* 底部 */}
+                  <div className="mt-4 pt-3 flex items-center justify-between text-red-400/60 text-xs border-t border-red-200/50">
+                    <span className="truncate max-w-[55%]">{question}</span>
+                    <span>{new Date().toLocaleDateString('zh-CN')}</span>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* 放射光芒背景 */}
-              <div className="absolute inset-0 opacity-[0.08]" style={{
-                background: `repeating-conic-gradient(from 0deg at 50% 100%, #c41e3a 0deg 2deg, transparent 2deg 15deg)`
-              }} />
-
-              {/* 毛主席剪影 - 右下角 */}
-              <div className="absolute -bottom-10 -right-10 w-[70%] text-red-800/10">
-                <MaoWavingSilhouette />
-              </div>
-
-              {/* 内容区域 */}
-              <div className="relative z-10 h-full flex flex-col pt-16 px-6 pb-6">
-
-                {/* 引用区 */}
-                <div className="flex-1 flex flex-col justify-center py-4">
-                  {/* 大引号 */}
-                  <div className="text-red-700/30 text-7xl font-serif leading-none mb-2">"</div>
-
-                  {/* 引用文字 */}
-                  <p className="text-[#2a1810] text-xl leading-relaxed font-serif px-2">
-                    {result.quote}
-                  </p>
-
-                  {/* 闭合引号 */}
-                  <div className="text-red-700/30 text-7xl font-serif leading-none text-right mt-2">"</div>
-
-                  {/* 出处 */}
-                  <p className="text-red-800 text-sm mt-4 text-right pr-2">
-                    ——《{result.source.replace(/[《》]/g, '')}》
-                  </p>
-                </div>
-
-                {/* 分割线 */}
-                <div className="flex items-center gap-3 my-4">
-                  <div className="flex-1 h-px bg-red-800/20" />
-                  <span className="text-red-700 text-xs">指点江山</span>
-                  <div className="flex-1 h-px bg-red-800/20" />
-                </div>
-
-                {/* 解读区 */}
-                <div className="bg-red-900/5 border border-red-800/20 rounded p-4">
-                  <p className="text-[#4a3728] text-sm leading-relaxed">
-                    {result.interpretation}
-                  </p>
-                </div>
-
-                {/* 底部信息 */}
-                <div className="mt-4 flex items-center justify-between text-[#8a7a6a] text-xs">
-                  <span className="truncate max-w-[60%]">问：{question}</span>
-                  <span>{new Date().toLocaleDateString('zh-CN')}</span>
-                </div>
-              </div>
-
-              {/* 复古纸张纹理 */}
-              <div className="absolute inset-0 opacity-30 mix-blend-multiply pointer-events-none" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
-              }} />
+            {/* 水印/品牌 */}
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <Star className="w-2.5 h-2.5 text-red-400" />
+              <span className="text-red-400/60 text-xs font-medium">指点江山</span>
+              <Star className="w-2.5 h-2.5 text-red-400" />
             </div>
           </div>
 
           {/* 操作区 */}
-          <div className={`mt-8 flex flex-col items-center gap-4 transition-all duration-500 delay-300 ${showCard ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`mt-5 flex flex-col items-center gap-2 transition-all duration-500 delay-200 ${showCard ? 'opacity-100' : 'opacity-0'}`}>
             <button
               onClick={reset}
-              className="px-8 py-3 bg-red-700 hover:bg-red-600 text-[#f5e6d3] rounded transition-colors"
+              className="px-6 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white text-sm rounded-full transition-all shadow-lg shadow-red-300/50"
             >
               再问一签
             </button>
-            <p className="text-[#666] text-xs">截图分享给朋友</p>
+            <p className="text-gray-400 text-xs">长按截图分享给朋友</p>
           </div>
         </div>
       )}
 
       {/* ===== 错误 ===== */}
       {appState === AppState.ERROR && (
-        <div className="flex-1 flex flex-col items-center justify-center bg-[#1a1a1a]">
-          <p className="text-red-400 mb-4">出了点问题</p>
-          <button onClick={reset} className="px-6 py-2 bg-red-700 text-[#f5e6d3] rounded">重试</button>
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <p className="text-gray-500 mb-4">出了点问题</p>
+          <button onClick={reset} className="px-6 py-2 bg-red-500 text-white rounded-full">重试</button>
         </div>
       )}
     </div>
