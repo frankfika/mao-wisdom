@@ -1,0 +1,1 @@
+// File deprecated/removed in favor of integrated animation in App.tsx
