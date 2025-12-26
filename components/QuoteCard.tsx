@@ -23,19 +23,19 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({ data, isFlipped, index, on
         <div className="absolute w-full h-full backface-hidden bg-[#A61C1C] flex flex-col items-center justify-between py-8 px-4 border border-[#ffffff]/10">
            {/* Texture */}
            <div className="absolute inset-0 bg-black opacity-10 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
-           
+
            <div className="relative z-10 flex flex-col items-center w-full h-full border border-[#FFD700]/30 p-2">
-              <div className="w-full h-full border border-[#FFD700]/30 flex flex-col items-center justify-center space-y-6">
-                  <span className="text-[#FFD700]/50 font-serif text-sm tracking-widest uppercase">Volume 0{index + 1}</span>
+              <div className="w-full h-full border border-[#FFD700]/30 flex flex-col items-center justify-center space-y-4 sm:space-y-6">
+                  <span className="text-[#FFD700]/50 font-serif text-xs sm:text-sm tracking-widest uppercase">Volume 0{index + 1}</span>
                   <div className="flex flex-col items-center">
-                    <h2 className="font-serif text-4xl font-bold text-[#FFD700] tracking-[0.2em] mb-2 writing-vertical-rl md:writing-horizontal-tb text-shadow">
+                    <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#FFD700] tracking-[0.2em] mb-2">
                       毛泽东
                     </h2>
-                    <h2 className="font-serif text-4xl font-bold text-[#FFD700] tracking-[0.2em] writing-vertical-rl md:writing-horizontal-tb text-shadow">
+                    <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#FFD700] tracking-[0.2em]">
                       选集
                     </h2>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-[#FFD700] flex items-center justify-center text-[#A61C1C] font-bold text-xs">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FFD700] flex items-center justify-center text-[#A61C1C] font-bold text-xs">
                     ★
                   </div>
               </div>
@@ -45,40 +45,39 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({ data, isFlipped, index, on
         {/* --- BACK: Paper/File Style --- */}
         <div className={`absolute w-full h-full backface-hidden rotate-y-180 bg-[#fdfbf7] flex flex-col overflow-hidden`}>
           {/* Header */}
-          <div className="h-14 bg-[#8B1A1A] text-[#FFD700] flex items-center justify-center px-4 shrink-0 relative">
-             <span className="font-bold text-lg tracking-widest font-serif">{headers[index]}</span>
-             {/* Decorative lines */}
+          <div className="h-10 sm:h-14 bg-[#8B1A1A] text-[#FFD700] flex items-center justify-center px-2 sm:px-4 shrink-0 relative">
+             <span className="font-bold text-sm sm:text-lg tracking-widest font-serif">{headers[index]}</span>
              <div className="absolute bottom-1 w-full h-[1px] bg-[#FFD700]/30"></div>
           </div>
 
           {/* Content */}
-          <div className="flex-1 p-6 overflow-y-auto relative no-scrollbar">
-             
+          <div className="flex-1 p-3 sm:p-6 overflow-y-auto relative no-scrollbar">
+
              {/* Keyword Watermark */}
-             <div className="absolute right-[-10px] top-[40px] opacity-5 pointer-events-none rotate-12">
-                <span className="font-calligraphy text-9xl text-[#8B1A1A]">{data.keyword}</span>
+             <div className="absolute right-[-10px] top-[20px] sm:top-[40px] opacity-5 pointer-events-none rotate-12">
+                <span className="font-calligraphy text-6xl sm:text-9xl text-[#8B1A1A]">{data.keyword}</span>
              </div>
 
-             <div className="relative z-10 mb-6 text-center">
-                <h3 className="text-3xl font-calligraphy text-[#8B1A1A] mb-4">{data.keyword}</h3>
+             <div className="relative z-10 mb-3 sm:mb-6 text-center">
+                <h3 className="text-2xl sm:text-3xl font-calligraphy text-[#8B1A1A] mb-2 sm:mb-4">{data.keyword}</h3>
              </div>
 
-             <div className="relative mb-6">
-                <p className="relative z-10 text-[#2c2c2c] font-serif font-bold text-lg leading-relaxed text-justify">
-                  “{data.quote}”
+             <div className="relative mb-3 sm:mb-6">
+                <p className="relative z-10 text-[#2c2c2c] font-serif font-bold text-sm sm:text-lg leading-relaxed text-justify">
+                  "{data.quote}"
                 </p>
-                <p className="text-right text-xs text-[#8B1A1A]/60 mt-3 italic">—— {data.source}</p>
+                <p className="text-right text-xs text-[#8B1A1A]/60 mt-2 sm:mt-3 italic">—— {data.source}</p>
              </div>
 
-             <div className="border-t border-[#8B1A1A]/10 pt-4">
-                <p className="text-xs font-bold text-[#8B1A1A] mb-2 uppercase tracking-wider">Directive / 指示</p>
-                <p className="text-sm text-[#4a4a4a] leading-6 text-justify font-sans">
+             <div className="border-t border-[#8B1A1A]/10 pt-3 sm:pt-4">
+                <p className="text-xs font-bold text-[#8B1A1A] mb-1 sm:mb-2 uppercase tracking-wider">指示</p>
+                <p className="text-xs sm:text-sm text-[#4a4a4a] leading-5 sm:leading-6 text-justify font-sans">
                   {data.interpretation}
                 </p>
              </div>
           </div>
-          
-          <div className="h-2 bg-[#8B1A1A] w-full shrink-0"></div>
+
+          <div className="h-1.5 sm:h-2 bg-[#8B1A1A] w-full shrink-0"></div>
         </div>
 
       </div>

@@ -46,20 +46,31 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+
+      /* Mobile 3D transform fixes */
+      .perspective-1000 {
+        -webkit-perspective: 1200px;
+      }
+      .transform-style-3d {
+        -webkit-transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        -webkit-backface-visibility: hidden;
+      }
+      .rotate-y-180 {
+        -webkit-transform: rotateY(180deg);
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 640px) {
+        .font-calligraphy {
+          font-size: 0.9em;
+        }
+      }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="h-[100dvh] w-screen overflow-hidden">
+  <body class="min-h-[100dvh] w-screen overflow-x-hidden">
     <div id="root" class="h-full w-full"></div>
   <script type="module" src="/index.tsx"></script>
 </body>

@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className={`w-full bg-[#8B1A1A] text-[#f2e9e4] relative selection:bg-[#FFD700] selection:text-[#8B1A1A] flex flex-col ${appState === AppState.IDLE ? 'h-[100dvh] overflow-hidden' : 'min-h-screen'}`}>
+    <div className={`w-full bg-[#8B1A1A] text-[#f2e9e4] relative selection:bg-[#FFD700] selection:text-[#8B1A1A] flex flex-col ${appState === AppState.IDLE ? 'min-h-[100dvh]' : 'min-h-screen'}`}>
       
       {/* Global Background */}
       <div className="fixed inset-0 pointer-events-none bg-gradient-to-b from-[#760c0c] to-[#4a0e0e] z-0"></div>
@@ -86,7 +86,7 @@ function App() {
           <div className="flex-none flex flex-col items-center pt-4">
              <div className="mb-6 relative">
                 {/* Portrait - Serious Style */}
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#FFD700]/30 shadow-2xl relative z-10 bg-[#8B1A1A]">
+                <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#FFD700]/30 shadow-2xl relative z-10 bg-[#8B1A1A]">
                   <img 
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Mao_Zedong_portrait.jpg/480px-Mao_Zedong_portrait.jpg" 
                     alt="Chairman Mao"
@@ -99,7 +99,7 @@ function App() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#FFD700] blur-[100px] opacity-10 -z-10"></div>
              </div>
 
-             <h1 className="text-5xl md:text-6xl font-calligraphy text-[#FFD700] leading-none drop-shadow-xl text-center mb-2">
+             <h1 className="text-4xl sm:text-5xl md:text-6xl font-calligraphy text-[#FFD700] leading-none drop-shadow-xl text-center mb-2">
                毛泽东选集
              </h1>
              <div className="h-[1px] w-24 bg-[#FFD700]/50 my-3"></div>
@@ -184,11 +184,11 @@ function App() {
              </div>
 
              {/* Cards Grid */}
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-16">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 w-full mb-8 sm:mb-16 px-2 sm:px-0">
                {result.cards.map((card, idx) => (
                  <div key={idx} className="flex justify-center w-full" style={{ animationDelay: `${idx * 0.15}s` }}>
-                   <div className="w-full max-w-[320px]"> 
-                     <QuoteCard 
+                   <div className="w-full max-w-[280px] sm:max-w-[320px]">
+                     <QuoteCard
                        index={idx}
                        data={card}
                        isFlipped={flippedIndices.includes(idx)}
