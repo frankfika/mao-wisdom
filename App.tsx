@@ -170,24 +170,20 @@ function App() {
 
       {/* ---------------- SUCCESS STATE ---------------- */}
       {appState === AppState.SUCCESS && result && (
-          <div ref={resultTopRef} className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center py-10 px-4 animate-fade-in">
-             
-             {/* Result Header */}
-             <div className="w-full flex justify-between items-end mb-12 border-b border-[#FFD700]/20 pb-4">
-                <div>
-                  <h2 className="text-3xl font-calligraphy text-[#FFD700] mb-1">战略部署</h2>
-                  <p className="text-xs text-[#f2e9e4]/50 tracking-widest">STRATEGIC DIRECTIVES</p>
-                </div>
-                <button onClick={reset} className="px-4 py-1.5 border border-[#FFD700]/30 text-[#FFD700] text-xs hover:bg-[#FFD700] hover:text-[#8B1A1A] transition-colors">
-                  下一题
-                </button>
+          <div ref={resultTopRef} className="relative z-10 w-full flex flex-col items-center py-6 sm:py-10 px-4 animate-fade-in">
+
+             {/* 顶部标题 */}
+             <div className="text-center mb-6 sm:mb-10">
+                <h2 className="text-2xl sm:text-3xl font-calligraphy text-amber-300 mb-2">锦囊三计</h2>
+                <p className="text-xs text-stone-400 tracking-widest">点击卡片查看详情</p>
              </div>
 
-             {/* Cards Grid */}
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 w-full mb-8 sm:mb-16 px-2 sm:px-0">
-               {result.cards.map((card, idx) => (
-                 <div key={idx} className="flex justify-center w-full" style={{ animationDelay: `${idx * 0.15}s` }}>
-                   <div className="w-full max-w-[280px] sm:max-w-[320px]">
+             {/* 卡片区域 - 横向滚动(移动端) / 网格(桌面端) */}
+             <div className="w-full max-w-4xl mb-6 sm:mb-10">
+               {/* 移动端: 横向滚动 */}
+               <div className="flex md:hidden gap-4 overflow-x-auto pb-4 px-2 snap-x snap-mandatory no-scrollbar">
+                 {result.cards.map((card, idx) => (
+                   <div key={idx} className="flex-none w-[75vw] max-w-[280px] snap-center">
                      <QuoteCard
                        index={idx}
                        data={card}
@@ -195,40 +191,82 @@ function App() {
                        onClick={() => handleCardClick(idx)}
                      />
                    </div>
-                 </div>
-               ))}
+                 ))}
+               </div>
+
+               {/* 桌面端: 网格布局 */}
+               <div className="hidden md:grid grid-cols-3 gap-6">
+                 {result.cards.map((card, idx) => (
+                   <div key={idx} className="flex justify-center">
+                     <div className="w-full max-w-[260px]">
+                       <QuoteCard
+                         index={idx}
+                         data={card}
+                         isFlipped={flippedIndices.includes(idx)}
+                         onClick={() => handleCardClick(idx)}
+                       />
+                     </div>
+                   </div>
+                 ))}
+               </div>
              </div>
 
-             {/* Summary Panel */}
-             {flippedIndices.length > 0 && (
-               <div className="w-full max-w-3xl animate-fade-in pb-20">
-                 <div className="bg-[#f2e9e4] text-[#2c2c2c] shadow-2xl relative border-t-4 border-[#FFD700]">
-                    <div className="p-8 md:p-10">
-                       <div className="flex items-center mb-6 border-l-4 border-[#8B1A1A] pl-4">
-                          <h3 className="text-xl font-bold font-serif text-[#8B1A1A] tracking-widest">
-                            总体方针
-                          </h3>
-                       </div>
-                       
-                       <div className="prose prose-stone max-w-none">
-                          <p className="text-lg font-serif leading-loose text-justify text-[#2c2c2c]">
-                            {result.overallAdvice}
-                          </p>
-                       </div>
+             {/* 进度指示 */}
+             <div className="flex items-center gap-2 mb-6 sm:mb-8">
+               {[0, 1, 2].map((i) => (
+                 <div
+                   key={i}
+                   className={`w-2 h-2 rounded-full transition-colors ${
+                     flippedIndices.includes(i) ? 'bg-amber-400' : 'bg-stone-600'
+                   }`}
+                 />
+               ))}
+               <span className="text-stone-500 text-xs ml-2">
+                 {flippedIndices.length}/3 已揭晓
+               </span>
+             </div>
 
-                       {flippedIndices.length === 3 && (
-                          <div className="mt-10 pt-6 border-t border-[#8B1A1A]/10 flex justify-center">
-                            <button 
-                              onClick={reset}
-                              className="px-8 py-3 bg-[#8B1A1A] text-[#FFD700] font-bold font-serif hover:bg-[#701010] transition-colors shadow-lg"
-                            >
-                              领会精神
-                            </button>
-                          </div>
-                       )}
-                    </div>
+             {/* 总体方针 - 全部翻开后显示 */}
+             {flippedIndices.length === 3 && (
+               <div className="w-full max-w-2xl animate-fade-in">
+                 {/* 做旧纸张风格 */}
+                 <div className="rounded-sm shadow-xl overflow-hidden" style={{ background: '#f8f4eb' }}>
+                   {/* 纸张纹理 */}
+                   <div className="relative p-5 sm:p-8">
+                     <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
+                       backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23p)'/%3E%3C/svg%3E")`
+                     }}></div>
+
+                     {/* 标题 */}
+                     <div className="relative flex items-center gap-3 mb-4 sm:mb-6 pb-3 border-b border-stone-300">
+                       <span className="text-red-800 text-xl">★</span>
+                       <h3 className="text-red-800 font-calligraphy text-xl sm:text-2xl">总体方针</h3>
+                     </div>
+
+                     {/* 内容 */}
+                     <p className="relative text-stone-700 text-sm sm:text-base leading-relaxed font-serif mb-6">
+                       {result.overallAdvice}
+                     </p>
+
+                     {/* 底部按钮 */}
+                     <div className="relative flex justify-center pt-4 border-t border-dashed border-stone-300">
+                       <button
+                         onClick={reset}
+                         className="px-6 py-2.5 bg-red-800 text-amber-200 text-sm font-medium hover:bg-red-900 transition-colors rounded-sm shadow"
+                       >
+                         再问一卦
+                       </button>
+                     </div>
+                   </div>
                  </div>
                </div>
+             )}
+
+             {/* 未全部翻开时的提示 */}
+             {flippedIndices.length > 0 && flippedIndices.length < 3 && (
+               <p className="text-stone-500 text-xs animate-pulse">
+                 翻开全部卡片查看总体方针
+               </p>
              )}
           </div>
       )}
